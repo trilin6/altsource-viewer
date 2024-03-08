@@ -18,10 +18,8 @@ export const sources = [
     "https://qnblackcat.github.io/AltStore/apps.json",
     "https://quarksources.github.io/dist/quantumsource.min.json",
     "https://quarksources.github.io/dist/quantumsource%2B%2B.min.json",
-    "https://alt.getutm.app",
     "https://raw.githubusercontent.com/driftywinds/driftywinds/main/Apps/apps.json",
-    "https://provenance-emu.com/apps.json",
-    "https://raw.githubusercontent.com/yodaluca23/SpotC-AltStore-Repo/main/AltStore%20Repo.json"
+    "https://provenance-emu.com/apps.json"
 ];
 
 export const entitlements = {
