@@ -15,13 +15,13 @@ export const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;()]*[
 
 export const sources = [
     "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
-    "https://therealfoxster.github.io/altsource/apps.json",
     "https://qnblackcat.github.io/AltStore/apps.json",
     "https://quarksources.github.io/dist/quantumsource.min.json",
     "https://quarksources.github.io/dist/quantumsource%2B%2B.min.json",
     "https://alt.getutm.app",
-    "https://flyinghead.github.io/flycast-builds/altstore.json",
-    "https://raw.githubusercontent.com/driftywinds/driftywinds/main/Apps/apps.json"
+    "https://raw.githubusercontent.com/driftywinds/driftywinds/main/Apps/apps.json",
+    "https://provenance-emu.com/apps.json",
+    "https://raw.githubusercontent.com/yodaluca23/SpotC-AltStore-Repo/main/AltStore%20Repo.json"
 ];
 
 export const entitlements = {
