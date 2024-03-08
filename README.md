@@ -2,7 +2,7 @@
 View your favorite AltStore source.
 
 ## Get started
-Simply paste the URL of an AltStore source to begin. [Try it here!](https://driftywinds.github.io/altsource-viewer/)
+Simply paste the URL of an AltStore source to begin. [Try it here!](https://ios.drifty.win)
 
 > [!NOTE]
 > If a source can't be viewed, it is highly likely due to a CORS restriction set by the server hosting the JSON file. To my knowledge, a JSON file hosted on GitHub (via GitHub Pages) does not have this problem.
