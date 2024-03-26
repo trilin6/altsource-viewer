@@ -18,7 +18,7 @@ export const sources = [
     "https://qnblackcat.github.io/AltStore/apps.json",
     "https://quarksources.github.io/dist/quantumsource.min.json",
     "https://quarksources.github.io/dist/quantumsource%2B%2B.min.json",
-    "https://raw.githubusercontent.com/driftywinds/driftywinds/main/Apps/apps.json",
+    "https://driftywinds.github.io/AltStore/apps.json",
     "https://provenance-emu.com/apps.json"
 ];
 
