@@ -7,18 +7,19 @@
 */
 
 a {
-  color: var(--app-tint-color)
+  color: var(--tint-color)
 }
 
 /* Main */
 
 #main {
   overflow: hidden;
+  padding-top: 7rem;
 }
 
 #main .item {
   margin-bottom: 0;
-  padding: 1em;
+  padding: 0 1rem;
 }
 
 #nav-bar #title,
@@ -130,7 +131,7 @@ a {
 
 #permissions .permission i {
   font-size: 1.55em;
-  color: var(--app-tint-color);
+  color: var(--tint-color);
 }
 
 #permissions .permission .title {
@@ -151,7 +152,7 @@ a {
 }
 
 .permission-icon {
-  color: var(--app-tint-color) !important;
+  color: var(--tint-color) !important;
   font-size: 2em;
 }
 
@@ -184,6 +185,7 @@ a {
   display: grid;
   grid-template-columns: 49.25% 49.25%;
   row-gap: 4px;
+  column-gap: 8px;
 }
 
 .permission-item {
@@ -228,12 +230,12 @@ a {
 
 #source .row>.row-title {
   font-size: 1.05em;
-  color: var(--app-tint-color) !important;
+  color: var(--tint-color) !important;
 }
 
 #source .bi {
   -webkit-text-stroke: 0.25px;
-  color: var(--app-tint-color);
+  color: var(--tint-color);
 }
 
 #source .row>.row-subtitle {

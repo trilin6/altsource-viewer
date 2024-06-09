@@ -9,20 +9,23 @@
 import { sourceURL } from "../modules/constants.js";
 
 export const AppHeader = (app, x = ".") => app ? `
-<div class="item">
-    <div class="app-header">
-        <div class="content">
-            <img id="app-icon" src="${app.iconURL}" alt="">
-            <div class="right">
-                <div class="text">
-                    <p class="title">${app.name}</p>
-                    <p class="subtitle">${app.developerName}</p>
+<div class="app-header-container">
+<a href="${x}/app/?source=${sourceURL}&id=${app.bundleIdentifier}" class="app-header-link">
+    <div class="app-header-inner-container">
+        <div class="app-header">
+            <div class="content">
+                <img id="app-icon" src="${app.iconURL}" alt="">
+                <div class="right">
+                    <div class="text">
+                        <p class="title">${app.name}</p>
+                        <p class="subtitle">${app.developerName}</p>
+                    </div>
+                        <button class="uibutton" style="background-color: ${app.tintColor ? "#" + app.tintColor.replaceAll("#", "") : "var(--altstore-tint-color);"};">View</button>
+                    </div>
                 </div>
-                <a href="${x}/app/?source=${sourceURL}&id=${app.bundleIdentifier}">
-                    <button class="uibutton" style="background-color: #${app.tintColor.replaceAll("#", "")};">View</button>
-                </a>
-            </div>
+            <div class="background" style="background-color: ${app.tintColor ? "#" + app.tintColor.replaceAll("#", "") : "var(--altstore-tint-color);"};"></div>
         </div>
-        <div class="background" style="background-color: #${app.tintColor.replaceAll("#", "")};"></div>
     </div>
-</div>` : undefined;
+</a>
+</div>
+` : undefined;

@@ -18,7 +18,7 @@ main(json => {
         open(`../?source=${sourceURL}`);
     });
 
-    document.getElementById("add").addEventListener("click", e => {
+    document.getElementById("add")?.addEventListener("click", e => {
         if (confirm(`Add "${json.name}" to Altstore?`))
             open(`altstore://source?url=${sourceURL}`);
     });
@@ -77,14 +77,19 @@ main(json => {
             <p>${description}</p>
         </div>
     `);
-    else document.getElementById("about").remove();
+    if (json.website) document.getElementById("about").insertAdjacentHTML("beforeend", `
+        <div class="item">
+            <a href="${json.website}" target="_blank" rel="noopener noreferrer"><i class="bi bi-link-45deg"></i> ${json.website}</a>
+        </div>
+    `);
+    if (!description && !json.website) document.getElementById("about").remove();
 
     window.onscroll = e => {
         const title = document.querySelector("h1");
         const navBar = document.getElementById("nav-bar");
         const navBarTitle = navBar.querySelector("#title");
 
-        if (title.getBoundingClientRect().y < 20) {
+        if (title.getBoundingClientRect().y < 85) {
             navBar.classList.remove("hide-border");
             navBarTitle.classList.remove("hidden");
         } else {

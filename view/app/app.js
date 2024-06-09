@@ -7,7 +7,7 @@
 //
 
 import { urlSearchParams, sourceURL } from "../../common/modules/constants.js";
-import { formatString, insertSpaceInCamelString, insertSpaceInSnakeString, formatVersionDate, open } from "../../common/modules/utilities.js";
+import { formatString, insertSpaceInCamelString, insertSpaceInSnakeString, formatVersionDate, open, setTintColor, isValidHTTPURL } from "../../common/modules/utilities.js";
 import { main } from "../../common/modules/main.js";
 import { AppPermissionItem } from "../../common/components/AppPermissionItem.js";
 import { privacy, entitlements, legacyPermissions } from "../../common/modules/constants.js";
@@ -25,22 +25,23 @@ const bundleId = urlSearchParams.get('id');
 
 (function () {
     // Hide/show navigation bar title & install button
-    let hidden = false;
+    let isNavigationBarItemsVisible = false;
     window.onscroll = function (e) {
         const appName = document.querySelector(".app-header .text>.title");
         const title = document.getElementById("title");
         const button = document.querySelector("#nav-bar .install");
-
-        if (hidden && appName.getBoundingClientRect().y >= 30) { // App name not visible
-            hidden = false;
-            title.classList.add("hidden");
-            button.classList.add("hidden");
-            button.disaled = true;
-        } else if (!hidden && appName.getBoundingClientRect().y < 30) {
-            hidden = true;
+        
+        if (!isNavigationBarItemsVisible && appName.getBoundingClientRect().y < 100) {
             title.classList.remove("hidden");
             button.classList.remove("hidden");
             button.disaled = false;
+            isNavigationBarItemsVisible = true;
+        } else if (isNavigationBarItemsVisible && appName.getBoundingClientRect().y >= 100) { // Main app name is visible
+            // Hide navigation bar title & install button
+            title.classList.add("hidden");
+            button.classList.add("hidden");
+            button.disaled = true;
+            isNavigationBarItemsVisible = false;
         }
     }
 })();
@@ -65,16 +66,18 @@ main((json) => {
     // Set tab title
     document.title = `${app.name} - ${json.name}`;
 
-    const tintColor = `#${app.tintColor?.replaceAll("#", "")}`;
+    const tintColor = app.tintColor ? app.tintColor.replaceAll("#", "") : "var(--tint-color);";
     // Set tint color
-    if (tintColor) document.querySelector(':root').style.setProperty("--app-tint-color", `${tintColor}`);
-
-    // Tint back button
-    document.getElementById("back").style.color = tintColor;
+    if (tintColor) setTintColor(tintColor);
 
     // Set up install buttons
     document.querySelectorAll("a.install").forEach(button => {
         button.href = `altstore://install?url=${app.downloadURL}`;
+        if (sourceURL?.includes("https://therealfoxster.github.io/altsource/apps.json"))
+            button.addEventListener("click", event => {
+                event.preventDefault();
+                alert(`Direct installation is currently unavailable for "${json.name}".\nAdd this source to AltStore or manually download the IPA file to install.`);
+            })
     });
 
     // Set up download button
@@ -87,8 +90,6 @@ main((json) => {
     navigationBar.querySelector("#title>p").textContent = app.name;
     // App icon
     navigationBar.querySelector("#title>img").src = app.iconURL;
-    // Install button
-    navigationBar.querySelector(".uibutton").style.backgroundColor = `${tintColor}`;
 
     // 
     // App header
@@ -99,14 +100,10 @@ main((json) => {
     appHeader.querySelector(".title").textContent = app.name;
     // Developer name
     appHeader.querySelector(".subtitle").textContent = app.developerName;
-    // Install button
-    appHeader.querySelector(".uibutton").style.backgroundColor = tintColor;
-    // Background
-    appHeader.querySelector(".background").style.backgroundColor = tintColor;
 
     const more = `
     <a id="more" onclick="revealTruncatedText(this);">
-        <button style="color: ${tintColor};">more</button>
+        <button>more</button>
     </a>`;
 
     window.revealTruncatedText = moreButton => {
@@ -125,8 +122,20 @@ main((json) => {
     // Subtitle
     preview.querySelector("#subtitle").textContent = app.subtitle;
     // Screenshots
-    app.screenshotURLs.forEach(url => {
-        preview.querySelector("#screenshots").insertAdjacentHTML("beforeend", `<img src="${url}" alt="" class="screenshot">`);
+    // New
+    app.screenshots?.forEach((screenshot, i) => {
+        if (screenshot.imageURL)
+            preview.querySelector("#screenshots").insertAdjacentHTML("beforeend", `
+                <img src="${screenshot.imageURL}" alt="${app.name} screenshot ${i+1}" class="screenshot">
+            `);
+        else if (isValidHTTPURL(screenshot))
+            preview.querySelector("#screenshots").insertAdjacentHTML("beforeend", `
+                <img src="${screenshot}" alt="${app.name} screenshot ${i+1}" class="screenshot">
+            `);
+    }); 
+    // Legacy
+    app.screenshotURLs?.forEach((url, i) => {
+        preview.querySelector("#screenshots").insertAdjacentHTML("beforeend", `<img src="${url}" alt="${app.name} screenshot ${i+1}" class="screenshot">`);
     });
     // Description
     const previewDescription = preview.querySelector("#description");
@@ -229,14 +238,14 @@ main((json) => {
     let lastUpdated = new Date("1970-01-01");
     let appCount = 0;
     let altSourceIcon = "../../common/assets/img/generic_app.jpeg";
-    let altSourceTintColor = "var(--app-tint-color);";
+    let altSourceTintColor = "var(--altstore-tint-color);";
     for (const app of json.apps) {
         if (app.beta || app.patreon?.hidden) return;
         let appVersionDate = new Date(app.versions ? app.versions[0].date : app.versionDate);
         if (appVersionDate > lastUpdated) {
             lastUpdated = appVersionDate;
             altSourceIcon = app.iconURL;
-            altSourceTintColor = app.tintColor;
+            if (app.tintColor) altSourceTintColor = app.tintColor;
         }
         appCount++;
     }
@@ -247,5 +256,5 @@ main((json) => {
     sourceTitle.innerText = json.name;
     sourceContainer.href = `../?source=${sourceURL}`;
     sourceSubtitle.innerText = `Last updated: ${formatVersionDate(lastUpdated)}`;
-    sourceAppCount.innerText = appCount;
+    sourceAppCount.innerText = appCount + (appCount === 1 ? " app" : " apps");
 });

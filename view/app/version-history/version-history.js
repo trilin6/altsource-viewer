@@ -7,7 +7,7 @@
 //
 
 import { urlSearchParams, sourceURL } from "../../../common/modules/constants.js";
-import { insertNavigationBar, formatVersionDate, formatString, open } from "../../../common/modules/utilities.js";
+import { insertNavigationBar, formatVersionDate, formatString, open, setTintColor } from "../../../common/modules/utilities.js";
 import { main } from "../../../common/modules/main.js";
 import { MoreButton } from "../../../common/components/MoreButton.js";
 import { VersionHistoryItem } from "../../../common/components/VersionHistoryItem.js";
@@ -30,8 +30,8 @@ main(json => {
     document.title = `Version History - ${app.name}`;
 
     // Set tint color
-    const tintColor = `#${app.tintColor?.replaceAll("#", "")}`;
-    if (tintColor) document.querySelector(':root').style.setProperty("--app-tint-color", `${tintColor}`);
+    const tintColor = app.tintColor ? app.tintColor.replaceAll("#", "") : "var(--altstore-tint-color);";
+    if (tintColor) setTintColor(tintColor);
     document.getElementById("back").style.color = tintColor;
 
     const versionsContainer = document.getElementById("versions");
@@ -63,4 +63,12 @@ main(json => {
         if (element.scrollHeight > element.clientHeight)
             element.insertAdjacentHTML("beforeend", MoreButton(tintColor));
     });
+
+    if (sourceURL?.includes("https://therealfoxster.github.io/altsource/apps.json"))
+        document.querySelectorAll(".version-install").forEach(button => {
+            button.addEventListener("click", event => {
+                event.preventDefault();
+                alert(`Direct installation is currently unavailable for "${json.name}".\nAdd this source to AltStore or manually download the IPA file to install.`);
+            });
+        });
 }, "../../../");

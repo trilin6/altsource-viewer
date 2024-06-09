@@ -7,15 +7,15 @@
 */
 
 #main {
-  padding-top: 4rem;
+  padding-top: 7rem;
 }
 
 a {
-  color: var(--app-tint-color);
+  color: var(--tint-color);
 }
 
 #versions {
-  padding: 0 1rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   /* gap: 1em; */
@@ -46,7 +46,7 @@ a {
 }
 
 .version-options {
-  color: var(--app-tint-color);
+  color: var(--tint-color);
 }
 
 .version-number {

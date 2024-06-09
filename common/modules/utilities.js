@@ -12,7 +12,7 @@ import { urlRegex, sourceURL } from "./constants.js";
 
 export function formatVersionDate(arg) {
     const versionDate = new Date(arg),
-        month = versionDate.toUTCString().split(" ")[2],
+        month = versionDate.toLocaleString("default", { month: "short" }),
         date = versionDate.getDate();
     const today = new Date();
     const msPerDay = 60 * 60 * 24 * 1000;
@@ -80,7 +80,7 @@ export function formatString(string) {
 }
 
 export function setTintColor(color) {
-    document.querySelector(':root')?.style.setProperty("--accent-color", `#${color}`);
+    document.querySelector(":root")?.style.setProperty("--tint-color", `#${color}`);
 }
 
 export function setUpBackButton() {
