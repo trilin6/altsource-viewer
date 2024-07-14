@@ -18,7 +18,7 @@ export const sources = [
     "https://raw.githubusercontent.com/Balackburn/YTLitePlusAltstore/main/apps.json",
     "https://quarksources.github.io/dist/quantumsource.min.json",
     "https://quarksources.github.io/dist/quantumsource%2B%2B.min.json",
-    "https://driftywinds.github.io/AltStore/apps.json",
+    "https://raw.githubusercontent.com/driftywinds/driftywinds.github.io/master/AltStore/apps.json",
 ];
 
 export const entitlements = {
