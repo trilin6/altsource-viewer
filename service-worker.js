@@ -5,7 +5,8 @@ var URLS = [
   `${GHPATH}/`,
   `${GHPATH}/index.html`,
   `${GHPATH}/index.css`,
-  `${GHPATH}/index.js`
+  `${GHPATH}/index.js`,
+  `${GHPATH}/favicon.ico`
 ];
 
 var CACHE_NAME = APP_PREFIX + VERSION;
