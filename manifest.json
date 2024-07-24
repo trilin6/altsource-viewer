@@ -1,0 +1,9 @@
+{
+"theme_color" : "#0c6568"
+"background_color" : "#0c6568"
+"display" : "browser"
+"scope" : "/"
+"start_url" : "/"
+"name" : "Censored Space Repo"
+"short_name" : "Repo"
+}
