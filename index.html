@@ -14,10 +14,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./common/style.css">
   <link rel="stylesheet" href="index.css">
+  <link rel="canonical" href="https://trilin6.github.io/altsource-viewer/" />
   <link rel="manifest" href="/manifest.json">
   <title>AltSource Viewer</title>
 </head>
 <body>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(function(registration) {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(function(error) {
+        console.log('Service Worker registration failed:', error);
+      });
+    }
+  </script>
   <div id="top">
     <div id="nav-bar" class="hide-border">
       <a href="https://github.com/therealFoxster/altsource-viewer" class="hidden">
